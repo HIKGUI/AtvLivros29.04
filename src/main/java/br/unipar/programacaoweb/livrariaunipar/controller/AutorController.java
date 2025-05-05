@@ -9,19 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/livro")
+@RequestMapping("/autor")
 public class AutorController {
 
-    private LivroService livroService;
+    private AutorService autorService;
 
-    public AutorController(LivroService livroService) {
-        this.livroService = livroService;
+    public AutorController(AutorService autorService) {
+        this.autorService = autorService;
     }
 
     @GetMapping("/listar")
-    public ResponseEntity<List<Livro>> listarLivros() {
+    public ResponseEntity<List<Autor>> listarAutor() {
 
-        List<Livro> livros = livroService.listarTodos();
+        List<Autor> autor = autorService.listarTodos();
 
         if (livros.isEmpty()) {
             return ResponseEntity.noContent().build();
