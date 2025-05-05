@@ -12,7 +12,9 @@ public class AutorService {
 
     private AutorRepository autorRepository;
 
-    public AutorService(AutorRepository autorRepository) { this.autorRepository = autorRepository;}
+    public AutorService(AutorRepository autorRepository) {
+        this.autorRepository = autorRepository;
+    }
 
     public Autor salvar(Autor autor) {
 
