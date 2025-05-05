@@ -1,7 +1,7 @@
 package br.unipar.programacaoweb.livrariaunipar.controller;
 
-import br.unipar.programacaoweb.livrariaunipar.model.Livro;
-import br.unipar.programacaoweb.livrariaunipar.service.LivroService;
+import br.unipar.programacaoweb.livrariaunipar.model.Autor;
+import br.unipar.programacaoweb.livrariaunipar.service.AutorService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,7 @@ public class AutorController {
     private AutorService autorService;
 
     public AutorController(AutorService autorService) {
+
         this.autorService = autorService;
     }
 
@@ -23,63 +24,64 @@ public class AutorController {
 
         List<Autor> autor = autorService.listarTodos();
 
-        if (livros.isEmpty()) {
+        if (autor.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(livros);
+        return ResponseEntity.ok(autor);
         //return ResponseEntity.ok(livroService.listarTodos());
     }
 
     @GetMapping("/buscar/{id}")
-    public ResponseEntity<Livro> buscarLivroPorId(@PathVariable Long id) {
-        Livro livro = livroService.buscarPorId(id);
-        if (livro == null) {
+    public ResponseEntity<Autor> buscarAutorPorId(@PathVariable Long id) {
+        Autor autor = autorService.buscarPorId(id);
+        if (autor == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(livro);
+        return ResponseEntity.ok(autor);
 
     }
 
 
 
-    @GetMapping("/buscar/titulo/{titulo}")
-    public ResponseEntity<List<Livro>> buscarLivrosPorTitulo(@PathVariable String titulo) {
-        List<Livro> livros = livroService.buscarPorTitulo(titulo);
-        if (livros.isEmpty()) {
+    @GetMapping("/buscar/titulo/{nome}")
+    public ResponseEntity<List<Autor>> buscarAutorPorTitulo(@PathVariable String nome) {
+        List<Autor> autor = autorService.buscarPorNome(nome);
+        if (autor.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(livros);
+        return ResponseEntity.ok(autor);
     }
 
     @PostMapping("/salvar")
-    public ResponseEntity<Livro> salvarLivro(@RequestBody Livro livro) {
-        Livro livroSalvo = livroService.salvar(livro);
+    public ResponseEntity<Autor> salvarAutor(@RequestBody Autor autor) {
+        Autor autorSalvo = autorService.salvar(autor);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(livroSalvo);
+        return ResponseEntity.status(HttpStatus.CREATED).body(autorSalvo);
     }
 
     @DeleteMapping("/excluir/{id}")
-    public ResponseEntity<Void> excluirLivro(@PathVariable Long id) {
-        Livro livro = livroService.buscarPorId(id);
+    public ResponseEntity<Void> excluirAutor(@PathVariable Long id) {
+        Autor autor = autorService.buscarPorId(id);
 
-        if (livro == null) {
+        if (autor == null) {
             return ResponseEntity.notFound().build();
         }
-        livroService.excluir(id);
+        autorService.excluir(id);
 
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Livro> atualizarLivro(@RequestBody Livro livro, @PathVariable Long id) {
-        Livro livroAtual = livroService.buscarPorId(id);
-        if (livroAtual == null) {
+    public ResponseEntity<Autor> atualizarAutor(@RequestBody Autor autor, @PathVariable Long id) {
+        Autor autorAtual = autorService.buscarPorId(id);
+        if (autorAtual == null) {
             return ResponseEntity.notFound().build();
         }
-        livroAtual.setTitulo(livro.getTitulo());
-        livroAtual.setNumeroPaginas(livro.getNumeroPaginas());
-        livroAtual.setGenero(livro.getGenero());
-        return ResponseEntity.ok(livroService.salvar(livroAtual));
+        autorAtual.setNome(autor.getNome());
+        autorAtual.setNacionalidade(autor.getNacionalidade());
+        autorAtual.setDataNascimento(autor.getDataNascimento());
+        autorAtual.setEmail(autor.getEmail());
+        return ResponseEntity.ok(autorService.salvar(autorAtual));
 
     }
 
