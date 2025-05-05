@@ -1,6 +1,6 @@
 package br.unipar.programacaoweb.livrariaunipar.service;
 
-import br.unipar.programacaoweb.livrariaunipar.model.Livro;
+import br.unipar.programacaoweb.livrariaunipar.model.Autor;
 import br.unipar.programacaoweb.livrariaunipar.repository.LivroRepository;
 
 import java.util.List;
@@ -8,31 +8,31 @@ import java.util.stream.Collectors;
 
 public class AutorService {
 
-    private LivroRepository livroRepository;
+    private AutorRepository livroRepository;
 
-    public LivroService(LivroRepository livroRepository) {
-        this.livroRepository = livroRepository;
+    public AutorService(AutorRepository AutorRepository) {
+        this.autorRepository = autorRepository;
     }
 
-    public Livro salvar(Livro livro) {
+    public Autor salvar(Autor autor) {
 
-        return livroRepository.save(livro);
+        return autorRepository.save(autor);
     }
 
     public void excluir(long id) {
-        livroRepository.deleteById(id);
+        autorRepository.deleteById(id);
     }
 
-    public Livro buscarPorId(Long id) {
-        return livroRepository.findById(id).orElse(null);
+    public Autor buscarPorId(Long id) {
+        return autorRepository.findById(id).orElse(null);
     }
 
-    public List<Livro> buscarPorTitulo(String titulo) {
-        return livroRepository.findAll().stream().filter(livro -> livro.getTitulo().equalsIgnoreCase(titulo)).collect(Collectors.toList());
+    public List<Autor> buscarPorNome(String nome) {
+        return autorRepository.findAll().stream().filter(livro -> livro.getNome().equalsIgnoreCase(nome)).collect(Collectors.toList());
     }
 
-    public List<Livro> listarTodos(){
-        return livroRepository.findAll();
+    public List<Autor> listarTodos(){
+        return autorRepository.findAll();
     }
 
 }
